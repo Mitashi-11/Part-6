@@ -24,8 +24,14 @@ def solve_puzzle(pixel: List[float], write_file):
 def read_file(ifile, ofile):
     pixel = []
     ctr = 0
+    line_ctr = 1
     for line in ifile:
         split_line = line.split()
+        if line_ctr == 2:
+            print('P3', file=ofile)
+            print(split_line[0], split_line[1], file=ofile)
+            print('255', file=ofile)
+        line_ctr += 1
         for value in split_line:
             try:
                 pixel.append(int(value))
@@ -41,9 +47,6 @@ def read_file(ifile, ofile):
 def main(argv: List[str]):
     input_file = read_commandline(argv)
     write_file = file_funcs.open_file('hidden.ppm', 'w')
-    print('P3', file=write_file)
-    print('512 384', file=write_file)
-    print('255', file=write_file)
     read_file(input_file, write_file)
     input_file.close()
     write_file.close()
