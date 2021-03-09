@@ -1,4 +1,5 @@
 import commandline
+import puzzle
 import cast
 import auxiliary
 import collisions
@@ -13,6 +14,7 @@ class CommandLine_Tests(unittest.TestCase):
         sphere2 = data.Sphere(data.Point(8,-10,110), 100, data.Color(0.2, 0.2, 0.6), data.Finish(0.4, 0.8,0, 0.05))
         check = (data.Light(data.Point(-100, 100, -100), data.Color(1.5, 1.5, 1.5)), data.Color(0.9, 0.9, 0.9), [sphere1, sphere2])
         self.assertEqual(result, check)
+
 
 
 class Cast_Tests(unittest.TestCase):

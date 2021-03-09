@@ -38,6 +38,7 @@ def read_file(ifile, ofile):
             if ctr == 3:
                 solve_puzzle(pixel, ofile)
                 ctr = 0
+                pixel = []
 
 
 def main(argv: List[str]):
