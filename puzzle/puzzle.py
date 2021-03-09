@@ -13,9 +13,6 @@ def read_commandline(argv: List[str]):
 
 
 def solve_puzzle(pixel: List[float], write_file):
-    print('P3', file=write_file)
-    print('512 384', file=write_file)
-    print('255', file=write_file)
     red = pixel[0] * 10
     if red > 255:
         red = 255
@@ -31,7 +28,7 @@ def read_file(ifile, ofile):
         split_line = line.split()
         for value in split_line:
             try:
-                pixel.append(float(value))
+                pixel.append(int(value))
                 ctr += 1
             except ValueError:
                 pass
@@ -44,6 +41,9 @@ def read_file(ifile, ofile):
 def main(argv: List[str]):
     input_file = read_commandline(argv)
     write_file = file_funcs.open_file('hidden.ppm', 'w')
+    print('P3', file=write_file)
+    print('512 384', file=write_file)
+    print('255', file=write_file)
     read_file(input_file, write_file)
     input_file.close()
     write_file.close()
