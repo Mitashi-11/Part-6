@@ -37,7 +37,7 @@ def create_blur(pixels, write_file, neighbour_reach, width):
             avg_b = int(sum_b / ctr)
             print(avg_r, avg_g, avg_b, file=write_file)
         except:
-            pass
+            pass # Need to fix edge case
 
 
 def read_file(ifile, ofile, neighbour_reach):
