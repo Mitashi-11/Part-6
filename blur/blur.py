@@ -1,5 +1,4 @@
 from typing import List
-import math
 import file_funcs
 import sys
 
@@ -17,7 +16,7 @@ def read_commandline(argv: List[str]):
     return (file, neighbour_reach)
 
 
-def create_blur(pixels, write_file, neighbour_reach, width):
+def create_blur(pixels, write_file, neighbour_reach, width, height):
     for pixel in pixels:
         pixel_x = pixel[1][0]
         pixel_y = pixel[1][1]
@@ -25,9 +24,21 @@ def create_blur(pixels, write_file, neighbour_reach, width):
         sum_g = 0
         sum_b = 0
         ctr = 0
+        x_start = pixel_x - neighbour_reach
+        x_end = pixel_x + neighbour_reach
+        y_start = pixel_y - neighbour_reach
+        y_end = pixel_y + neighbour_reach
+        if x_start < 0:
+            x_start = 0
+        if x_end >= height:
+            x_end = height
+        if y_start < 0:
+            y_end = 0
+        if y_end >= width:
+            y_end = width
         try:
-            for x in range(pixel_x - neighbour_reach, pixel_x + neighbour_reach):
-                for y in range(pixel_y - neighbour_reach, pixel_y + neighbour_reach):
+            for x in range(x_start, x_end):
+                for y in range(y_start, y_end):
                     sum_r = sum_r + pixels[(x*width)+y][0][0]
                     sum_g = sum_g + pixels[(x*width)+y][0][1]
                     sum_b = sum_b + pixels[(x*width)+y][0][2]
@@ -37,7 +48,7 @@ def create_blur(pixels, write_file, neighbour_reach, width):
             avg_b = int(sum_b / ctr)
             print(avg_r, avg_g, avg_b, file=write_file)
         except:
-            pass # Need to fix edge case
+            print(pixel)
 
 
 def read_file(ifile, ofile, neighbour_reach):
@@ -51,6 +62,7 @@ def read_file(ifile, ofile, neighbour_reach):
     print(file_content[1], file_content[2], file=ofile)
     print('255', file=ofile)
     width = int(file_content[1])
+    height = int(file_content[2])
     for i in range(4, len(file_content)):
         try:
             pixel.append(int(file_content[i]))
@@ -66,7 +78,7 @@ def read_file(ifile, ofile, neighbour_reach):
             ctr = 0
             pixel = []
             pixel_col += 1
-    create_blur(pixels, ofile, neighbour_reach, width)
+    create_blur(pixels, ofile, neighbour_reach, width, height)
 
 
 def main(argv: List[str]):
