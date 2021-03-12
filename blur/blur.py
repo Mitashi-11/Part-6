@@ -33,7 +33,7 @@ def create_blur(pixels, write_file, neighbour_reach, width, height):
         if x_end >= height:
             x_end = height
         if y_start < 0:
-            y_end = 0
+            y_start = 0
         if y_end >= width:
             y_end = width
         try:
@@ -47,8 +47,8 @@ def create_blur(pixels, write_file, neighbour_reach, width, height):
             avg_g = int(sum_g / ctr)
             avg_b = int(sum_b / ctr)
             print(avg_r, avg_g, avg_b, file=write_file)
-        except:
-            print(pixel)
+        except ValueError:
+            print("Incorrect format")
 
 
 def read_file(ifile, ofile, neighbour_reach):
@@ -68,7 +68,7 @@ def read_file(ifile, ofile, neighbour_reach):
             pixel.append(int(file_content[i]))
             ctr += 1
         except ValueError:
-            pass
+            print("Incorrect format")
         if ctr == 3:
             if pixel_col == width:
                 pixel_row += 1
