@@ -47,7 +47,6 @@ def read_file(ifile, ofile, row, col, radius):
             if pixel_col == width:
                 pixel_row += 1
                 pixel_col = 0
-            #print(pixel, pixel_row, pixel_col, row, col)
             create_fade(pixel, ofile, row, col, radius, pixel_row, pixel_col)
             ctr = 0
             pixel = []
