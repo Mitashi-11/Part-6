@@ -17,9 +17,9 @@ def read_commandline(argv: List[str]):
 
 
 def create_blur(pixels, write_file, neighbour_reach, width, height):
-    for pixel in pixels:
-        pixel_x = pixel[1][0]
-        pixel_y = pixel[1][1]
+    for i in range(len(pixels)):
+        pixel_x = i // width
+        pixel_y = i % width
         sum_r = 0
         sum_g = 0
         sum_b = 0
@@ -39,9 +39,9 @@ def create_blur(pixels, write_file, neighbour_reach, width, height):
         try:
             for x in range(x_start, x_end):
                 for y in range(y_start, y_end):
-                    sum_r = sum_r + pixels[(x*width)+y][0][0]
-                    sum_g = sum_g + pixels[(x*width)+y][0][1]
-                    sum_b = sum_b + pixels[(x*width)+y][0][2]
+                    sum_r = sum_r + pixels[(x*width)+y][0]
+                    sum_g = sum_g + pixels[(x*width)+y][1]
+                    sum_b = sum_b + pixels[(x*width)+y][2]
                     ctr += 1
             avg_r = int(sum_r/ctr)
             avg_g = int(sum_g / ctr)
@@ -55,8 +55,6 @@ def read_file(ifile, ofile, neighbour_reach):
     pixel = []
     pixels = []
     ctr = 0
-    pixel_row = 0
-    pixel_col = 0
     file_content = (ifile.read()).split()
     print('P3', file=ofile)
     print(file_content[1], file_content[2], file=ofile)
@@ -70,14 +68,9 @@ def read_file(ifile, ofile, neighbour_reach):
         except ValueError:
             print("Incorrect format")
         if ctr == 3:
-            if pixel_col == width:
-                pixel_row += 1
-                pixel_col = 0
-            pixel_location = (pixel_row, pixel_col)
-            pixels.append((pixel, pixel_location))
+            pixels.append(pixel)
             ctr = 0
             pixel = []
-            pixel_col += 1
     create_blur(pixels, ofile, neighbour_reach, width, height)
 
 
